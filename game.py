@@ -52,10 +52,15 @@ class Enemy(GameSprite):
     
     def update(self):
         self.rect.x += self.speed * self.direction  # Рух горизонтально
-          # Міняємо напрямок руху
+
+        # Якщо рибка виходить за межі екрану, збільшуємо лічильник втрачених і видаляємо її
+        if self.rect.x < 0 or self.rect.x > win_width:
+            global lost
+            lost += 1
+            self.kill()  # Видаляємо рибку з групи
 
 # Створення об'єктів
-vudka = Player(hero_img, 250, win_height - 120, 80, 100, 10)
+vudka = Player(hero_img, 250, win_height - 120, 80, 100, 20)
 fishes = sprite.Group()
 for i in range(5):
     fish = Enemy(enemy_img, randint(80, win_width - 80), randint(100, 500), 80, 50, randint(1, 3))
@@ -91,12 +96,9 @@ while run:
         finish = True
         window.blit(font1.render("Ти переміг!", True, (0, 255, 0)), (200, 300))
     
+    if lost == max_lost:
+        finish = True
+        window.blit(font1.render("Ти програв!", True, (255, 0, 0)), (200, 300))
+    
     display.update()
-    clock.tick(FPS)
-
-
-
-    
-
-
-    
+    clock.tick(FPS)     
