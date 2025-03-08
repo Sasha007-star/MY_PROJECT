@@ -1,6 +1,11 @@
 from pygame import *
 from random import randint, choice
 
+path_music = "mp3.ogg"
+mixer.init() 
+mixer.music.load(path_music)
+mixer.music.play()
+
 # Ініціалізація
 font.init()
 font1 = font.Font(None, 80)
